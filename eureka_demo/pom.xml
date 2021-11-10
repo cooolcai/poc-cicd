@@ -17,7 +17,7 @@
 		<java.version>1.8</java.version>
 		<spring-cloud.version>2020.0.4</spring-cloud.version>
 		<!--	参照新增docker属性指定镜像版本号-->
-		<docker.tag.version>1.0.26</docker.tag.version>
+		<docker.tag.version>1.0.35</docker.tag.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -55,12 +55,10 @@
 		<id>test</id>
 		<properties>
 			<docker.server.addr>local.harbor/test/</docker.server.addr>
-			<docker.server.id>local.harbor</docker.server.id>
+			<docker.server.id>docker</docker.server.id>
 			<docker.directory.path>dockertest</docker.directory.path>
 <!--			<docker.tag.version>1.0.0</docker.tag.version>-->
 			<profile.active>test</profile.active>
-			<username>admin</username>
-			<password>Ja123456789</password>
 		</properties>
 	</profile>
 	</profiles>
@@ -76,17 +74,23 @@
 				<artifactId>docker-maven-plugin</artifactId>
 				<configuration>
 					<skipDocker>false</skipDocker>
+					<user>admin</user>
 					<forceTags>true</forceTags>
-					<pushImage>true</pushImage>
+					<pushImage>false</pushImage>
 					<buildArgs>
 						<jarfile>${project.build.finalName}.jar</jarfile>
 					</buildArgs>
 					<!--<useConfigFile>true</useConfigFile>-->
 <!--					出现找不到docker server.id的情况-->
 					<serverId>${docker.server.id}</serverId>
-					<imageName>${docker.server.addr}${project.artifactId}:${docker.tag.version}</imageName>
+
+<!--					插件中无法识别在profile中设置的变量，导致打包失败。-->
 <!--					<imageName>${docker.server.addr}${project.artifactId}:${docker.tag.version}</imageName>-->
-					<dockerDirectory>${docker.directory.path}</dockerDirectory>
+					<imageName>local.harbor/test/${project.artifactId}:${docker.tag.version}</imageName>
+
+<!--					插件中无法识别在profile中设置的变量，导致mvn命令显示dockerdirectory为null-->
+<!--					<dockerDirectory>${docker.directory.path}</dockerDirectory>-->
+					<dockerDirectory>dockertest</dockerDirectory>
 					<resources>
 						<resource>
 							<targetPath>/</targetPath>
@@ -95,14 +99,15 @@
 						</resource>
 					</resources>
 				</configuration>
-				<executions>
-					<execution>
-						<id>builddocker</id>
-						<goals>
-							<goal>builddocker</goal>
-						</goals>
-					</execution>
-				</executions>
+<!--				mvn命令会显示无法在life cycle中找到对应的phase，因此可以直接注释-->
+<!--				<executions>-->
+<!--					<execution>-->
+<!--						<id>builddocker</id>-->
+<!--						<goals>-->
+<!--							<goal>builddocker</goal>-->
+<!--						</goals>-->
+<!--					</execution>-->
+<!--				</executions>-->
 			</plugin>
 		</plugins>
 	</build>

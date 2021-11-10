@@ -17,7 +17,7 @@
 		<java.version>1.8</java.version>
 		<spring-cloud.version>2020.0.4</spring-cloud.version>
 		<!--	参照新增docker属性指定镜像版本号-->
-		<docker.tag.version>1.0.35</docker.tag.version>
+		<docker.tag.version>1.0.36</docker.tag.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -82,7 +82,8 @@
 					</buildArgs>
 					<!--<useConfigFile>true</useConfigFile>-->
 <!--					出现找不到docker server.id的情况-->
-					<serverId>${docker.server.id}</serverId>
+<!--					<serverId>${docker.server.id}</serverId>-->
+					<serverId>docker</serverId>
 
 <!--					插件中无法识别在profile中设置的变量，导致打包失败。-->
 <!--					<imageName>${docker.server.addr}${project.artifactId}:${docker.tag.version}</imageName>-->

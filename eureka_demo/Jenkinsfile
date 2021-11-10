@@ -1,0 +1,15 @@
+pipeline {
+    agent any
+
+    tools {
+        maven 'mvn-363'
+    }
+    stages {
+        stage('Build'){
+            steps{
+                sh "mvn clean install docker:build docker:push"
+                sh "printenv" //将环境变量打印到 console 中
+            }
+        }
+    }
+}

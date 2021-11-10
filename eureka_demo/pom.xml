@@ -17,7 +17,7 @@
 		<java.version>1.8</java.version>
 		<spring-cloud.version>2020.0.4</spring-cloud.version>
 		<!--	参照新增docker属性指定镜像版本号-->
-		<docker.tag.version>1.0.36</docker.tag.version>
+		<docker.tag.version>1.0.39</docker.tag.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -76,7 +76,7 @@
 					<skipDocker>false</skipDocker>
 					<user>admin</user>
 					<forceTags>true</forceTags>
-					<pushImage>false</pushImage>
+					<pushImage>true</pushImage>
 					<buildArgs>
 						<jarfile>${project.build.finalName}.jar</jarfile>
 					</buildArgs>
@@ -101,14 +101,14 @@
 					</resources>
 				</configuration>
 <!--				mvn命令会显示无法在life cycle中找到对应的phase，因此可以直接注释-->
-<!--				<executions>-->
-<!--					<execution>-->
-<!--						<id>builddocker</id>-->
-<!--						<goals>-->
-<!--							<goal>builddocker</goal>-->
-<!--						</goals>-->
-<!--					</execution>-->
-<!--				</executions>-->
+				<executions>
+					<execution>
+						<id>builddocker</id>
+						<goals>
+							<goal>push</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
